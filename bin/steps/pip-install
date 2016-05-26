@@ -5,6 +5,11 @@ puts-cmd "pip install -r requirements.txt"
 [ "$FRESH_PYTHON" ] && bpwatch start pip_install_first
 
 set +e
+env
+for mypath in ${LD_LIBRARY_PATH//:/ }; do
+    echo "$mypath"
+    ls "$mypath"
+done
 /app/.heroku/python/bin/pip install -r requirements.txt --exists-action=w --src=./.heroku/src --disable-pip-version-check --no-cache-dir 2>&1 | tee $WARNINGS_LOG | cleanup | indent
 PIP_STATUS="${PIPESTATUS[0]}"
 set -e
